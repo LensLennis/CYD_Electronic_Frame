@@ -2,10 +2,10 @@
  * \file main.cpp
  * \brief SD card slide show for the ESP32 Cheap Yellow Display.
  * 
- * More information: https://github.com/witnessmenow/ESP32-Cheap-Yellow-Display
  * 
- * Written by Claus Näveke
- * Github: https://github.com/TheNitek
+ * \author Lena Lorenzo
+ * Credit to Claus Näveke
+ * 
 */
 
 // Libraries
