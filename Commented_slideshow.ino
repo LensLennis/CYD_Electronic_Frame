@@ -2,12 +2,13 @@
  * \file main.cpp
  * \brief SD card slide show for the ESP32 Cheap Yellow Display.
  * 
- * 
+ * More information: https://github.com/LensLennis/CYD_Electronic_Frame
  * \author Lena Lorenzo
  * Credit to Claus Näveke
- * 
+ *
 */
 
+/////////////////////////////////////////////////////////////////////////////////
 // Libraries
 #include <TFT_eSPI.h> /**< Library for interfacing with LCD displays */
 #include <XPT2046_Bitbang.h> /**< Library for interfacing with the touch screen */
@@ -40,7 +41,7 @@ uint16_t fileCount = 0;
 uint32_t timer;
 int16_t y_offset;
 int16_t lastY;
-
+/////////////////////////////////////////////////////////////////////////
 volatile bool buttonPressed = false;
 
 /**
@@ -49,7 +50,7 @@ volatile bool buttonPressed = false;
 void IRAM_ATTR buttonInt() {
     buttonPressed = true;
 }
-
+//////////////////////////////////////////////////////////////////////////
 /**
  * @brief Function to draw JPEG images on the display
  * @param pDraw Pointer to JPEGDRAW struct
@@ -59,6 +60,7 @@ int JPEGDraw(JPEGDRAW *pDraw) {
   tft.pushImage(pDraw->x, pDraw->y, pDraw->iWidth, pDraw->iHeight, pDraw->pPixels);
   return 1;
 }
+//////////////////////////////////////////////////////////////////////////
 
 /**
  * @brief Function to open a file
@@ -71,6 +73,7 @@ void * myOpen(const char *filename, int32_t *size) {
   *size = jpgFile.size();
   return &jpgFile;
 }
+//////////////////////////////////////////////////////////////////////////
 
 /**
  * @brief Function to close a file
@@ -79,6 +82,7 @@ void * myOpen(const char *filename, int32_t *size) {
 void myClose(void *handle) {
   if (jpgFile) jpgFile.close();
 }
+//////////////////////////////////////////////////////////////////////////
 
 /**
  * @brief Function to read from a file
@@ -91,6 +95,7 @@ int32_t myRead(JPEGFILE *handle, uint8_t *buffer, int32_t length) {
   if (!jpgFile) return 0;
   return jpgFile.read(buffer, length);
 }
+//////////////////////////////////////////////////////////////////////////
 
 /**
  * @brief Function to seek within a file
@@ -102,6 +107,7 @@ int32_t mySeek(JPEGFILE *handle, int32_t position) {
   if (!jpgFile) return 0;
   return jpgFile.seek(position);
 }
+//////////////////////////////////////////////////////////////////////////
 
 /**
  * @brief Function to decode a JPEG image
@@ -116,6 +122,7 @@ void decodeJpeg(const char *name) {
   jpeg.decode((tft.width()-jpeg.getWidth())/2, (tft.height()-jpeg.getHeight())/2, 0);
   jpeg.close();
 }
+//////////////////////////////////////////////////////////////////////////
 
 /**
  * @brief Function to load an image from the SD card
@@ -163,6 +170,7 @@ void loadImage(uint16_t targetIndex) {
 
   Serial.print("Could not load file no "); Serial.println(targetIndex);
 }
+//////////////////////////////////////////////////////////////////////////
 
 /**
  * @brief Show error on the display and serial
@@ -175,6 +183,7 @@ void error(const char *msg) {
   tft.println("Could not open /");
   while(true) delay(1000);
 }
+//////////////////////////////////////////////////////////////////////////
 
 /**
  * @brief Setup function
@@ -248,6 +257,7 @@ void setup() {
 
   timer = millis();
 }
+//////////////////////////////////////////////////////////////////////////
 
 /**
  * @brief Loop function
@@ -270,5 +280,6 @@ void loop() {
   }
   delay(100);
 }
+//////////////////////////////////////////////////////////////////////////
 
 
